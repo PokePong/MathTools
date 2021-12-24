@@ -1,4 +1,4 @@
-package com.loicb.mathTools;
+package org.mathtools;
 
 import org.junit.jupiter.api.Test;
 

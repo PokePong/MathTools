@@ -1,4 +1,4 @@
-package com.loicb.mathTools;
+package org.mathtools;
 
 public class Main {
 
