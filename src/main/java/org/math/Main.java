@@ -1,4 +1,4 @@
-package org.mathtools;
+package org.math;
 
 public class Main {
 
