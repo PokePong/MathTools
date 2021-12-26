@@ -332,8 +332,7 @@ public class Matrix4 implements Serializable {
     public Matrix4 transpose() {
         float[] tmp = new float[16];
         get(tmp, true);
-        Matrix4 mat = new Matrix4(tmp);
-        return mat;
+        return new Matrix4(tmp);
     }
 
     public FloatBuffer toFloatBuffer() {

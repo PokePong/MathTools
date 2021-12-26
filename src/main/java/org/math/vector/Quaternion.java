@@ -313,9 +313,6 @@ public class Quaternion extends AVector4<Quaternion> implements Serializable {
 
     /**
      * Sets the values of this quaternion to the nlerp from itself to q2 by blend.
-     *
-     * @param q2
-     * @param blend
      */
     public Quaternion nlerp(Quaternion q2, float blend) {
         float dot = dot(q2);
