@@ -9,16 +9,19 @@ import java.io.Serializable;
 @ToString
 public class Vector3 extends Vector<Vector3> implements Serializable {
 
-    public final static Vector3 ZERO = new Vector3(0, 0, 0);
+    public final static Vector3 ZERO = new Vector3(0f, 0f, 0f);
     public final static Vector3 NAN = new Vector3(Float.NaN, Float.NaN, Float.NaN);
-    public final static Vector3 UNIT_X = new Vector3(1, 0, 0);
-    public final static Vector3 UNIT_Y = new Vector3(0, 1, 0);
-    public final static Vector3 UNIT_Z = new Vector3(0, 0, 1);
-    public final static Vector3 UNIT = new Vector3(1, 1, 1);
+    public final static Vector3 UNIT_X = new Vector3(1f, 0f, 0f);
+    public final static Vector3 UNIT_Y = new Vector3(0f, 1f, 0f);
+    public final static Vector3 UNIT_Z = new Vector3(0f, 0f, 1f);
+    public final static Vector3 UNIT = new Vector3(1f, 1f, 1f);
 
-    public final static Vector3 RIGHT = new Vector3(1, 0, 0);
-    public final static Vector3 UP = new Vector3(0, 1, 0);
-    public final static Vector3 FORWARD = new Vector3(0, 0, -1);
+    public final static Vector3 RIGHT = new Vector3(1f, 0f, 0f);
+    public final static Vector3 LEFT = new Vector3(-1f, 0f, 0f);
+    public final static Vector3 UP = new Vector3(0f, 1f, 0f);
+    public final static Vector3 DOWN = new Vector3(0f, -1f, 0f);
+    public final static Vector3 FORWARD = new Vector3(0f, 0f, 1f);
+    public final static Vector3 BACK = new Vector3(0f, 0f, -1f);
 
     public final static Vector3 POSITIVE_INFINITY = new Vector3(
             Float.POSITIVE_INFINITY,
@@ -31,15 +34,15 @@ public class Vector3 extends Vector<Vector3> implements Serializable {
 
     @Getter
     @Setter
-    private float x;
+    public float x;
 
     @Getter
     @Setter
-    private float y;
+    public float y;
 
     @Getter
     @Setter
-    private float z;
+    public float z;
 
     public Vector3() {
         this(0);
@@ -66,6 +69,19 @@ public class Vector3 extends Vector<Vector3> implements Serializable {
         return new Vector3(resX, resY, resZ);
     }
 
+    public Vector3 set(float x, float y, float z) {
+        setX(x);
+        setY(y);
+        setZ(z);
+        return This();
+    }
+
+    public Vector3 projectOnPlane(Vector3 normal) {
+        float n = dot(normal);
+        float d = normal.lengthSquared();
+        return sub(normal.normalize().mul(n / d));
+    }
+
     @Override
     protected float[] toArray() {
         return new float[]{x, y, z};
@@ -90,5 +106,12 @@ public class Vector3 extends Vector<Vector3> implements Serializable {
     public float angleBetween(Vector3 v) {
         float dotProduct = this.dot(v);
         return Mathf.aCos(dotProduct);
+    }
+
+    public static Vector3 reflect(Vector3 inDirection, Vector3 inNormal) {
+        float factor = -2f * inNormal.dot(inDirection);
+        return new Vector3(factor * inNormal.x + inDirection.x,
+                factor * inNormal.y + inDirection.y,
+                factor * inNormal.z + inDirection.z);
     }
 }

@@ -9,18 +9,18 @@ import java.io.Serializable;
 @ToString
 public class Vector2 extends Vector<Vector2> implements Serializable {
 
-    public static final Vector2 ZERO = new Vector2(0, 0);
-    public static final Vector2 UNIT_X = new Vector2(1, 0);
-    public static final Vector2 UNIT_Y = new Vector2(0, 1);
-    public static final Vector2 UNIT = new Vector2(1, 1);
+    public static final Vector2 ZERO = new Vector2(0f, 0f);
+    public static final Vector2 UNIT_X = new Vector2(1f, 0f);
+    public static final Vector2 UNIT_Y = new Vector2(0f, 1f);
+    public static final Vector2 UNIT = new Vector2(1f, 1f);
 
     @Getter
     @Setter
-    private float x;
+    public float x;
 
     @Getter
     @Setter
-    private float y;
+    public float y;
 
     public Vector2() {
         this(0, 0);

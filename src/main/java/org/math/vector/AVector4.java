@@ -11,19 +11,19 @@ public abstract class AVector4<T extends AVector4<T>> extends Vector<T> {
 
     @Getter
     @Setter
-    private float x;
+    public float x;
 
     @Getter
     @Setter
-    private float y;
+    public float y;
 
     @Getter
     @Setter
-    private float z;
+    public float z;
 
     @Getter
     @Setter
-    private float w;
+    public float w;
 
     public AVector4(float s) {
         this(s, s, s, s);
