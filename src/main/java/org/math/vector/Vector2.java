@@ -16,11 +16,11 @@ public class Vector2 extends Vector<Vector2> implements Serializable {
 
     @Getter
     @Setter
-    public float x;
+    private float x;
 
     @Getter
     @Setter
-    public float y;
+    private float y;
 
     public Vector2() {
         this(0, 0);
