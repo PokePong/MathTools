@@ -68,12 +68,8 @@ public class Vector4 extends AVector4<Vector4> implements Serializable {
     }
 
     @Override
-    protected Vector4 build(@NonNull float value) {
+    protected Vector4 build(float value) {
         return new Vector4(value);
     }
 
-    @Override
-    protected Vector4 This() {
-        return this;
-    }
 }

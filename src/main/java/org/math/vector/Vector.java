@@ -26,7 +26,7 @@ public abstract class Vector<T extends Vector<T>> {
         return build(a);
     }
 
-    public final T add(@NonNull float s) {
+    public final T add(float s) {
         float[] a = toArray();
         for (int i = 0; i < a.length; ++i) {
             a[i] += s;
@@ -34,7 +34,7 @@ public abstract class Vector<T extends Vector<T>> {
         return build(a);
     }
 
-    public final T sub(@NonNull float s) {
+    public final T sub(float s) {
         return add(-s);
     }
 
@@ -42,7 +42,7 @@ public abstract class Vector<T extends Vector<T>> {
         return add(v.negate());
     }
 
-    public final T mul(@NonNull float scalar) {
+    public final T mul(float scalar) {
         float[] a = toArray();
         for (int i = 0; i < a.length; ++i) {
             a[i] *= scalar;
@@ -85,11 +85,11 @@ public abstract class Vector<T extends Vector<T>> {
         return result;
     }
 
-    public final T scale(@NonNull float scalar) {
+    public final T scale(float scalar) {
         return mul(scalar);
     }
 
-    public final T divide(@NonNull float scalar) {
+    public final T divide(float scalar) {
         return mul(1f / scalar);
     }
 

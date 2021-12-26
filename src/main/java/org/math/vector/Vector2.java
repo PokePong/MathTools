@@ -99,7 +99,7 @@ public class Vector2 extends Vector<Vector2> implements Serializable {
     }
 
     @Override
-    public Vector2 build(@NonNull float value) {
+    public Vector2 build(float value) {
         return new Vector2(value);
     }
 

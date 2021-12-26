@@ -89,13 +89,8 @@ public class Quaternion extends AVector4<Quaternion> implements Serializable {
     }
 
     @Override
-    protected Quaternion build(@NonNull float value) {
+    protected Quaternion build(float value) {
         return new Quaternion(value);
-    }
-
-    @Override
-    protected Quaternion This() {
-        return this;
     }
 
     /**

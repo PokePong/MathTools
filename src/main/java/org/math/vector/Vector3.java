@@ -93,7 +93,7 @@ public class Vector3 extends Vector<Vector3> implements Serializable {
     }
 
     @Override
-    protected Vector3 build(@NonNull float value) {
+    protected Vector3 build(float value) {
         return new Vector3(value);
     }
 
