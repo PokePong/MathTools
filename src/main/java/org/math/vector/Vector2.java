@@ -5,7 +5,7 @@ import org.math.Mathf;
 
 import java.io.Serializable;
 
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = false)
 @ToString
 public class Vector2 extends Vector<Vector2> implements Serializable {
 

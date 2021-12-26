@@ -5,10 +5,10 @@ import org.math.Mathf;
 
 import java.io.Serializable;
 
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = false)
 @ToString
 public class Vector3 extends Vector<Vector3> implements Serializable {
-    
+
     public final static Vector3 ZERO = new Vector3(0, 0, 0);
     public final static Vector3 NAN = new Vector3(Float.NaN, Float.NaN, Float.NaN);
     public final static Vector3 UNIT_X = new Vector3(1, 0, 0);
