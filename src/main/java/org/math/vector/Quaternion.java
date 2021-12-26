@@ -1,6 +1,7 @@
 package org.math.vector;
 
 import lombok.EqualsAndHashCode;
+import lombok.NonNull;
 import lombok.ToString;
 import org.math.Mathf;
 import org.math.Matrix4;
@@ -28,6 +29,10 @@ public class Quaternion extends AVector4<Quaternion> implements Serializable {
 
     public Quaternion(Quaternion q) {
         super(q.getX(), q.getY(), q.getZ(), q.getW());
+    }
+
+    private Quaternion(QuaternionTemp q) {
+        super(q.x, q.y, q.z, q.w);
     }
 
     public boolean isIdentity() {
@@ -79,21 +84,18 @@ public class Quaternion extends AVector4<Quaternion> implements Serializable {
     }
 
     @Override
-    protected Quaternion build(float x, float y, float z, float w) {
-        return new Quaternion(x, y, z, w);
+    protected Quaternion build(@NonNull float[] values) {
+        return new Quaternion(values[0], values[1], values[2], values[3]);
+    }
+
+    @Override
+    protected Quaternion build(@NonNull float value) {
+        return new Quaternion(value);
     }
 
     @Override
     protected Quaternion This() {
         return this;
-    }
-
-    private static class QuaternionTemp {
-        float x, y, z, w;
-    }
-
-    private Quaternion(QuaternionTemp q) {
-        super(q.x, q.y, q.z, q.w);
     }
 
     /**
@@ -454,5 +456,8 @@ public class Quaternion extends AVector4<Quaternion> implements Serializable {
         return q1.slerp(q2, t);
     }
 
+    private static class QuaternionTemp {
+        float x, y, z, w;
+    }
 
 }

@@ -1,6 +1,7 @@
 package org.math.vector;
 
 import lombok.EqualsAndHashCode;
+import lombok.NonNull;
 import lombok.ToString;
 
 import java.io.Serializable;
@@ -62,8 +63,13 @@ public class Vector4 extends AVector4<Vector4> implements Serializable {
     }
 
     @Override
-    protected Vector4 build(float x, float y, float z, float w) {
-        return new Vector4(x, y, z, w);
+    protected Vector4 build(@NonNull float[] values) {
+        return new Vector4(values[0], values[1], values[2], values[3]);
+    }
+
+    @Override
+    protected Vector4 build(@NonNull float value) {
+        return new Vector4(value);
     }
 
     @Override

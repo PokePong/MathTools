@@ -46,7 +46,7 @@ public class Vector2 extends Vector<Vector2> implements Serializable {
     public Vector2 set(float x, float y) {
         setX(x);
         setY(y);
-        return This();
+        return this;
     }
 
     /**
@@ -101,11 +101,6 @@ public class Vector2 extends Vector<Vector2> implements Serializable {
     @Override
     public Vector2 build(@NonNull float value) {
         return new Vector2(value);
-    }
-
-    @Override
-    public Vector2 This() {
-        return this;
     }
 
     public static Vector2 reflect(Vector2 direction, Vector2 normal) {

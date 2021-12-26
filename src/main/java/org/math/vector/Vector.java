@@ -15,8 +15,6 @@ public abstract class Vector<T extends Vector<T>> {
 
     protected abstract T build(@NonNull float value);
 
-    protected abstract T This();
-
     public abstract float angleBetween(T v);
 
     public final T add(@NonNull T v) {
@@ -102,7 +100,7 @@ public abstract class Vector<T extends Vector<T>> {
     public final T normalize() {
         float lengthSquared = lengthSquared();
         if (lengthSquared == 0 && Mathf.approximately(lengthSquared, 1)) {
-            return This();
+            return build(toArray());
         }
         return divide(length());
     }

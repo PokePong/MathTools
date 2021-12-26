@@ -73,7 +73,7 @@ public class Vector3 extends Vector<Vector3> implements Serializable {
         setX(x);
         setY(y);
         setZ(z);
-        return This();
+        return this;
     }
 
     public Vector3 projectOnPlane(Vector3 normal) {
@@ -95,11 +95,6 @@ public class Vector3 extends Vector<Vector3> implements Serializable {
     @Override
     protected Vector3 build(@NonNull float value) {
         return new Vector3(value);
-    }
-
-    @Override
-    protected Vector3 This() {
-        return this;
     }
 
     @Override

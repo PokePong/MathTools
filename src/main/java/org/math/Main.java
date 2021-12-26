@@ -11,6 +11,8 @@ public class Main {
         print(a);
         print(b);
 
+        a.addLocal(b);
+
         print(a);
         print(b);
 
