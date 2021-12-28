@@ -1,6 +1,9 @@
 package org.math.vector;
 
-import lombok.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.math.Mathf;
 
 @EqualsAndHashCode(callSuper = false)
@@ -42,6 +45,6 @@ public abstract class AVector4<T extends AVector4<T>> extends Vector<T> {
     @Override
     public float angleBetween(T v) {
         float dotProduct = dot(v);
-        return Mathf.aCos(dotProduct);
+        return Mathf.acos(dotProduct);
     }
 }

@@ -142,8 +142,8 @@ public class Quaternion extends AVector4<Quaternion> implements Serializable {
 
     public float getRollRad() {
         final int pole = getGimbalPole();
-        return pole == 0 ? Mathf.aTan2(2f * (w * z + y * x), 1f - 2f * (x * x + z * z))
-                : (float) pole * 2f * Mathf.aTan2(y, w);
+        return pole == 0 ? Mathf.atan2(2f * (w * z + y * x), 1f - 2f * (x * x + z * z))
+                : (float) pole * 2f * Mathf.atan2(y, w);
     }
 
     public float getRoll() {
@@ -160,7 +160,7 @@ public class Quaternion extends AVector4<Quaternion> implements Serializable {
     }
 
     public float getYawRad() {
-        return getGimbalPole() == 0 ? Mathf.aTan2(2f * (y * w + x * z), 1f - 2f * (y * y + x * x)) : 0f;
+        return getGimbalPole() == 0 ? Mathf.atan2(2f * (y * w + x * z), 1f - 2f * (y * y + x * x)) : 0f;
     }
 
     public float getYaw() {
@@ -193,19 +193,19 @@ public class Quaternion extends AVector4<Quaternion> implements Serializable {
         // is correction factor
         float test = x * y + z * w;
         if (test > 0.499 * unit) { // singularity at north pole
-            angles[1] = 2 * Mathf.aTan2(x, w);
+            angles[1] = 2 * Mathf.atan2(x, w);
             angles[2] = Mathf.HALF_PI;
             angles[0] = 0;
         } else if (test < -0.499 * unit) { // singularity at south pole
-            angles[1] = -2 * Mathf.aTan2(x, w);
+            angles[1] = -2 * Mathf.atan2(x, w);
             angles[2] = -Mathf.HALF_PI;
             angles[0] = 0;
         } else {
-            angles[1] = Mathf.aTan2(2 * y * w - 2 * x * z, sqx - sqy - sqz + sqw); // roll
+            angles[1] = Mathf.atan2(2 * y * w - 2 * x * z, sqx - sqy - sqz + sqw); // roll
             // or
             // heading
-            angles[2] = Mathf.aSin(2 * test / unit); // pitch or attitude
-            angles[0] = Mathf.aTan2(2 * x * w - 2 * y * z, -sqx + sqy - sqz + sqw); // yaw
+            angles[2] = Mathf.asin(2 * test / unit); // pitch or attitude
+            angles[0] = Mathf.atan2(2 * x * w - 2 * y * z, -sqx + sqy - sqz + sqw); // yaw
             // or
             // bank
         }
@@ -289,7 +289,7 @@ public class Quaternion extends AVector4<Quaternion> implements Serializable {
         if ((1 - result) > 0.1f) {
             // Get the angle between the 2 quaternions, and then store the sin()
             // of that angle
-            float theta = Mathf.aCos(result);
+            float theta = Mathf.acos(result);
             float invSinTheta = 1f / Mathf.sin(theta);
 
             // Calculate the scale for q1 and q2, according to the angle and

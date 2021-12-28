@@ -63,6 +63,14 @@ public abstract class Vector<T extends Vector<T>> {
         return build(a);
     }
 
+    public final T divide(float scalar) {
+        return mul(1f / scalar);
+    }
+
+    public final T divide(@NonNull T v) {
+        return mul(v.inverse());
+    }
+
     /**
      * Not marked final as quaternions have a different
      * idea of the inverse
@@ -83,14 +91,6 @@ public abstract class Vector<T extends Vector<T>> {
             result += a[i] * b[i];
         }
         return result;
-    }
-
-    public final T scale(float scalar) {
-        return mul(scalar);
-    }
-
-    public final T divide(float scalar) {
-        return mul(1f / scalar);
     }
 
     public final T negate() {

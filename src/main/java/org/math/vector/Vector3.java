@@ -20,8 +20,8 @@ public class Vector3 extends Vector<Vector3> implements Serializable {
     public final static Vector3 LEFT = new Vector3(-1f, 0f, 0f);
     public final static Vector3 UP = new Vector3(0f, 1f, 0f);
     public final static Vector3 DOWN = new Vector3(0f, -1f, 0f);
-    public final static Vector3 FORWARD = new Vector3(0f, 0f, 1f);
-    public final static Vector3 BACK = new Vector3(0f, 0f, -1f);
+    public final static Vector3 FORWARD = new Vector3(0f, 0f, -1f);
+    public final static Vector3 BACK = new Vector3(0f, 0f, 1f);
 
     public final static Vector3 POSITIVE_INFINITY = new Vector3(
             Float.POSITIVE_INFINITY,
@@ -62,6 +62,30 @@ public class Vector3 extends Vector<Vector3> implements Serializable {
         this.z = z;
     }
 
+    public Vector3 add(float x, float y, float z) {
+        float[] a = toArray();
+        a[0] += x;
+        a[1] += y;
+        a[2] += z;
+        return build(a);
+    }
+
+    public Vector3 sub(float x, float y, float z) {
+        return add(-x, -y, -z);
+    }
+
+    public Vector3 mul(float x, float y, float z) {
+        float[] a = toArray();
+        a[0] *= x;
+        a[1] *= y;
+        a[2] *= z;
+        return build(a);
+    }
+
+    public Vector3 divide(float x, float y, float z) {
+        return mul(1f / x, 1f / y, 1f / z);
+    }
+
     public Vector3 cross(Vector3 v) {
         float resX = ((y * v.z) - (z * v.y));
         float resY = ((z * v.x) - (x * v.z));
@@ -100,7 +124,7 @@ public class Vector3 extends Vector<Vector3> implements Serializable {
     @Override
     public float angleBetween(Vector3 v) {
         float dotProduct = this.dot(v);
-        return Mathf.aCos(dotProduct);
+        return Mathf.acos(dotProduct);
     }
 
     public static Vector3 reflect(Vector3 inDirection, Vector3 inNormal) {
@@ -108,5 +132,34 @@ public class Vector3 extends Vector<Vector3> implements Serializable {
         return new Vector3(factor * inNormal.x + inDirection.x,
                 factor * inNormal.y + inDirection.y,
                 factor * inNormal.z + inDirection.z);
+    }
+
+    public static void generateOrthonormalBasis(Vector3 u, Vector3 v, Vector3 w) {
+        w = w.normalize();
+        generateComplementBasis(u, v, w);
+    }
+
+    public static void generateComplementBasis(Vector3 u, Vector3 v, Vector3 w) {
+        float fInvLength;
+
+        if (Mathf.abs(w.x) >= Mathf.abs(w.y)) {
+            // w.x or w.z is the largest magnitude component, swap them
+            fInvLength = Mathf.invSqrt(w.x * w.x + w.z * w.z);
+            u.x = -w.z * fInvLength;
+            u.y = 0.0f;
+            u.z = +w.x * fInvLength;
+            v.x = w.y * u.z;
+            v.y = w.z * u.x - w.x * u.z;
+            v.z = -w.y * u.x;
+        } else {
+            // w.y or w.z is the largest magnitude component, swap them
+            fInvLength = Mathf.invSqrt(w.y * w.y + w.z * w.z);
+            u.x = 0.0f;
+            u.y = +w.z * fInvLength;
+            u.z = -w.y * fInvLength;
+            v.x = w.y * u.z - w.z * u.y;
+            v.y = -w.x * u.z;
+            v.z = w.x * u.y;
+        }
     }
 }

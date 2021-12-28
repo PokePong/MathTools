@@ -1,11 +1,15 @@
 package org.math.geometry;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.math.vector.Vector2;
 
 import java.io.Serializable;
 
+@EqualsAndHashCode
+@ToString
 public class Ray2D implements Serializable {
 
     @Getter

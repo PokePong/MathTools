@@ -1,5 +1,8 @@
 package org.math;
 
+import org.math.vector.Vector2;
+import org.math.vector.Vector3;
+
 import java.util.Arrays;
 import java.util.Random;
 
@@ -74,7 +77,7 @@ public class Mathf {
         return (float) Math.tan(x);
     }
 
-    public static float aSin(float x) {
+    public static float asin(float x) {
         if (-1.0f < x) {
             if (x < 1.0f) {
                 return (float) Math.asin(x);
@@ -84,7 +87,7 @@ public class Mathf {
         return -HALF_PI;
     }
 
-    public static float aCos(float x) {
+    public static float acos(float x) {
         if (-1.0f < x) {
             if (x < 1.0f) {
                 return (float) Math.acos(x);
@@ -94,11 +97,11 @@ public class Mathf {
         return PI;
     }
 
-    public static float aTan(float x) {
+    public static float atan(float x) {
         return (float) Math.atan(x);
     }
 
-    public static float aTan2(float y, float x) {
+    public static float atan2(float y, float x) {
         return (float) Math.atan2(y, x);
     }
 
@@ -275,6 +278,126 @@ public class Mathf {
 
         float result = pow(absval / absmax, gamma) * absmax;
         return negative ? -result : result;
+    }
+
+    /**
+     * Given 3 points in a 2d plane, this function computes if the points going from A-B-C
+     * are moving counter clock wise.
+     *
+     * @param p0 Point 0.
+     * @param p1 Point 1.
+     * @param p2 Point 2.
+     * @return 1 If they are CCW, -1 if they are not CCW, 0 if p2 is between p0 and p1.
+     */
+    public static int counterClockwise(Vector2 p0, Vector2 p1, Vector2 p2) {
+        float dx1, dx2, dy1, dy2;
+        dx1 = p1.x - p0.x;
+        dy1 = p1.y - p0.y;
+        dx2 = p2.x - p0.x;
+        dy2 = p2.y - p0.y;
+        if (dx1 * dy2 > dy1 * dx2) {
+            return 1;
+        }
+        if (dx1 * dy2 < dy1 * dx2) {
+            return -1;
+        }
+        if ((dx1 * dx2 < 0) || (dy1 * dy2 < 0)) {
+            return -1;
+        }
+        if ((dx1 * dx1 + dy1 * dy1) < (dx2 * dx2 + dy2 * dy2)) {
+            return 1;
+        }
+        return 0;
+    }
+
+    /**
+     * Test if a point is inside a triangle.  1 if the point is on the ccw side,
+     * -1 if the point is on the cw side, and 0 if it is on neither.
+     *
+     * @param t0 First point of the triangle.
+     * @param t1 Second point of the triangle.
+     * @param t2 Third point of the triangle.
+     * @param p  The point to test.
+     * @return Value 1 or -1 if inside triangle, 0 otherwise.
+     */
+    public static int pointInsideTriangle(Vector2 t0, Vector2 t1, Vector2 t2, Vector2 p) {
+        int val1 = counterClockwise(t0, t1, p);
+        if (val1 == 0) {
+            return 1;
+        }
+        int val2 = counterClockwise(t1, t2, p);
+        if (val2 == 0) {
+            return 1;
+        }
+        if (val2 != val1) {
+            return 0;
+        }
+        int val3 = counterClockwise(t2, t0, p);
+        if (val3 == 0) {
+            return 1;
+        }
+        if (val3 != val1) {
+            return 0;
+        }
+        return val3;
+    }
+
+    /**
+     * A method that computes normal for a triangle defined by three vertices.
+     *
+     * @param v1 first vertex
+     * @param v2 second vertex
+     * @param v3 third vertex
+     * @return a normal for the face
+     */
+    public static Vector3 computeNormal(Vector3 v1, Vector3 v2, Vector3 v3) {
+        Vector3 a1 = v1.sub(v2);
+        Vector3 a2 = v3.sub(v2);
+        return a2.cross(a1).normalize();
+    }
+
+    /**
+     * Converts a point from Spherical coordinates to Cartesian (using positive
+     * Y as up) and stores the results in the store var.
+     *
+     * @param sphereCoords the input spherical coordinates: x=distance from
+     *                     origin, y=longitude in radians, z=latitude in radians (not null,
+     *                     unaffected)
+     * @return the Cartesian coordinates (a new vector)
+     */
+    public static Vector3 sphericalToCartesian(Vector3 sphereCoords) {
+        Vector3 res = new Vector3();
+        res.y = sphereCoords.x * Mathf.sin(sphereCoords.z);
+        float a = sphereCoords.x * Mathf.cos(sphereCoords.z);
+        res.x = a * Mathf.cos(sphereCoords.y);
+        res.z = a * Mathf.sin(sphereCoords.y);
+        return res;
+    }
+
+    /**
+     * Converts a point from Cartesian coordinates (using positive Y as up) to
+     * Spherical and stores the results in the store var. (Radius, Azimuth,
+     * Polar)
+     *
+     * @param cartCoords the input Cartesian coordinates (not null, unaffected)
+     * @return the Cartesian coordinates: x=distance from origin, y=longitude in
+     * radians, z=latitude in radians (a new vector)
+     */
+    public static Vector3 cartesianToSpherical(Vector3 cartCoords) {
+        Vector3 res = new Vector3();
+        float x = cartCoords.x;
+        if (x == 0) {
+            x = Mathf.ZERO_TOLERANCE;
+        }
+        res.x = Mathf.sqrt((x * x)
+                + (cartCoords.y * cartCoords.y)
+                + (cartCoords.z * cartCoords.z));
+        res.y = Mathf.atan(cartCoords.z / x);
+        if (x < 0) {
+            res.y += Mathf.PI;
+        }
+        res.z = Mathf.asin(cartCoords.y / res.x);
+        return res;
     }
 
 }

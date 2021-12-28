@@ -39,6 +39,28 @@ public class Vector2 extends Vector<Vector2> implements Serializable {
         this.y = y;
     }
 
+    public Vector2 add(float x, float y) {
+        float[] a = toArray();
+        a[0] += x;
+        a[1] += y;
+        return build(a);
+    }
+
+    public Vector2 sub(float x, float y) {
+        return add(-x, -y);
+    }
+
+    public Vector2 mul(float x, float y) {
+        float[] a = toArray();
+        a[0] *= x;
+        a[1] *= y;
+        return build(a);
+    }
+
+    public Vector2 divide(float x, float y) {
+        return mul(1f / x, 1f / y);
+    }
+
     public float determinant(Vector2 v) {
         return (x * v.y) - (y * v.x);
     }
@@ -58,7 +80,7 @@ public class Vector2 extends Vector<Vector2> implements Serializable {
      * @return the angle in radians. [-pi, pi)
      */
     public float getAngle() {
-        return Mathf.aTan2(y, x);
+        return Mathf.atan2(y, x);
     }
 
     /**
@@ -85,7 +107,7 @@ public class Vector2 extends Vector<Vector2> implements Serializable {
      */
     public float smallestAngleBetween(Vector2 otherVector) {
         float dotProduct = dot(otherVector);
-        return Mathf.aCos(dotProduct);
+        return Mathf.acos(dotProduct);
     }
 
     @Override
