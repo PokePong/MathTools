@@ -42,7 +42,13 @@ public class Vector3Test {
 
     @Test
     public void testAddValue() {
+        Vector3 a = new Vector3(0.0f, Float.NaN, 5.21f);
+        Vector3 res = a.add(-5.21f);
 
+        assertNotNull(res);
+        assertEquals(res.x, -5.21f);
+        assertEquals(res.y, Float.NaN);
+        assertEquals(res.z, 0.0f);
     }
 
     @Test

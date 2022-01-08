@@ -59,7 +59,7 @@ public class Quaternion extends AVector4<Quaternion> implements Serializable {
 
     @Override
     public Quaternion inverse() {
-        float norm = norm();
+        float norm = lengthSquared();
         if (norm > 0.0f) {
             float invNorm = 1.0f / norm;
             return new Quaternion(-x * invNorm, -y * invNorm, -z * invNorm, w
@@ -77,10 +77,6 @@ public class Quaternion extends AVector4<Quaternion> implements Serializable {
         float tempZ = 2 * x * z * v.x + 2 * y * z * v.y + z * z * v.z - 2 * w * y
                 * v.x - y * y * v.z + 2 * w * x * v.y - x * x * v.z + w * w * v.z;
         return new Vector3(tempX, tempY, tempZ);
-    }
-
-    public float norm() {
-        return dot(this);
     }
 
     @Override
@@ -102,7 +98,7 @@ public class Quaternion extends AVector4<Quaternion> implements Serializable {
      * @return the rotation matrix representation of this quaternion.
      */
     public Matrix4 toRotationMatrix4() {
-        float norm = norm();
+        float norm = lengthSquared();
         // we explicitly test norm against one here, saving a division
         // at the cost of a test and branch. Is it worth it?
         float s = (norm == 1f) ? 2f : (norm > 0f) ? 2f / norm : 0;
@@ -221,7 +217,7 @@ public class Quaternion extends AVector4<Quaternion> implements Serializable {
      * @return the column specified by the index.
      */
     public Vector3 getRotationColumn(int i) {
-        float norm = norm();
+        float norm = lengthSquared();
         if (norm != 1.0f) {
             norm = Mathf.invSqrt(norm);
         }
